@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Get Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("frm.jpg");
+            background-repeat: no-repeat;
+            background-size: 1700px;
+            backdrop-filter: blur(20px);
+        }
+
+        h1 {
+            color: rgba(6, 6, 6, 0.943);
+            text-align: center;
+            padding: 40px;
+        }
+
+        table {
+            margin: 10px auto;
+            width: 50%;
+            color: rgb(12, 12, 12);
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        input[type="text"],
+        select {
+            width: calc(100% - 24px);
+            padding: 10px;
+            border: 1px solid #140101;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: calc(100% - 24px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: blue;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<h1>REQUIRED DETAILS</h1>
+ <form action="http://localhost:8060/login" method="post">
+    <table>
+        <tr>
+            <td>NAME:</td>
+            <td><input type="text" name="username" value=""/></td>
+        </tr>
+        <tr>
+            <td>ROLL NUM:</td>
+            <td><input type="text" name="rollnum" value=""/></td>
+        </tr>
+        <tr>
+            <td>YEAR:</td>
+            <td><input type="text" name="year" value=""/></td>
+        </tr>
+        <tr>
+            <td>GENDER:</td>
+            <td>
+                <input type="radio" name="gender" value="female"/>FEMALE
+                <input type="radio" name="gender" value="male"/>MALE
+            </td>
+        </tr>
+        <tr>
+            <td>BRANCH:</td>
+            <td>
+                <select id="branch" name="branch">
+                    <option value="select branch">select branch</option>
+                    <option value="information technology">information technology</option>
+                    <option value="computer science">computer science</option>
+                    <option value="electronics and engineering">electronics and engineering</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>MOBILE NO:</td>
+            <td><input type="text" name="phno" value=""/></td>
+        </tr>
+        <tr>
+            <td>ADDRESS:</td>
+            <td><input type="text" name="address" value=""/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" name="login" value="Login"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
+
+   

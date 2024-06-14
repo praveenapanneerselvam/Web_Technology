@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>INCOME TAX CALCULATOR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: whitesmoke;
+            margin: 0;
+            padding: 0;
+            background-color: bisque;
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .form-container {
+            width: 100%;
+        }
+        #result {
+            display: none;
+            width: 100%;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: lightgray; /* Background color applied here */
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            width: 100%;
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: calc(100% - 10px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="button"] {
+            width: 100%;
+            padding: 10px;
+            background-color: darkcyan; /* Background color applied here */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        input[type="button"]:hover {
+            background-color: teal; /* Background color applied here */
+        }
+        #bill-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #bill-table th, #bill-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        #bill-table th {
+            background-color: lightgrey;
+        }
+        .validation-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>INCOME TAX CALCULATOR</h1>
+            <form id="tax-form" method="post">
+                <label for="Name">Enter the Name :</label>
+                <input type="text" id="Name" name="Name" required /><br>
+                <span id="name-validation" class="validation-message"></span><br>
+                <label for="PAN_number">Enter the PAN number :</label>
+                <input type="text" id="PAN_number" name="PAN_number" required /><br>
+                <span id="pan-validation" class="validation-message"></span><br>
+                <label for="Income_from_salary">Income from salary :</label>
+                <input type="text" id="Income_from_salary" name="Income_from_salary" required /><br>
+                <span id="salary-validation" class="validation-message"></span><br>
+                <label for="Income_from_rent">Income from Rent :</label>
+                <input type="text" id="Income_from_rent" name="Income_from_rent" required /><br>
+                <span id="rent-validation" class="validation-message"></span><br>
+                <label for="Income_from_other_sources">Income from Other sources :</label>
+                <input type="text" id="Income_from_other_sources" name="Income_from_other_sources" required /><br>
+                <span id="other-validation" class="validation-message"></span><br>
+                <label for="LIC">LIC :</label>
+                <input type="text" id="LIC" name="LIC" required /><br>
+                <span id="lic-validation" class="validation-message"></span><br>
+                <label for="Medical_Insurance">Medical Insurance :</label>
+                <input type="text" id="Medical_Insurance" name="Medical_insurance" required /><br>
+                <span id="medical-validation" class="validation-message"></span><br>
+                <label for="Deposit">Deposit :</label>
+                <input type="text" id="Deposit" name="Deposit" required /><br>
+                <span id="deposit-validation" class="validation-message"></span><br>
+
+                <input type="button" value="Calculate" onclick="getdata()"/>
+                <!--<input type="button" value="Calculate"/>-->
+            </form>
+        </div>
+        <div id="result">
+            <h2>Income Tax Details</h2>
+            <table id="bill-table">
+                
+                <tr>
+                    <td>Name</td>
+                    <td id="name-output"></td>
+                </tr>
+                <tr>
+                    <td>PAN number</td>
+                    <td id="pan-output"></td>
+                </tr>
+                <tr>
+                    <td>Total Income</td>
+                    <td id="total-income-output"></td>
+                </tr>
+                <tr>
+                    <td>Deduction</td>
+                    <td id="deduction-output"></td>
+                </tr>
+                <tr>
+                    <td>Standard Reduction</td>
+                    <td>50000</td>
+                </tr>
+                <tr>
+                    <td>Final Deduction</td>
+                    <td id="final-deduction-output"></td>
+                </tr>
+                <tr>
+                    <td>Tax</td>
+                    <td id="tax-output"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+       
+    // Function to validate Name field
+    function validateName(name) {
+        return !/\d/.test(name); // Check if there are no numbers in the name
+    }
+
+    // Function to validate input fields
+    function validateInput() {
+        // Validate Name field
+        let nameInput = document.getElementById("Name");
+        let nameValidation = document.getElementById("name-validation");
+        let name = nameInput.value;
+
+        if (name.trim() === "") {
+            nameValidation.textContent = "Name is required";
+        } else if (!validateName(name)) {
+            nameValidation.textContent = "Name should not contain numbers";
+        } else {
+            nameValidation.textContent = "";
+        }
+
+        // Validate PAN Number field
+        let panInput = document.getElementById("PAN_number");
+        let panValidation = document.getElementById("pan-validation");
+        let pan = panInput.value;
+
+        if (pan.trim() === "") {
+            panValidation.textContent = "PAN Number is required";
+        } else {
+            panValidation.textContent = "";
+        }
+
+        // Validate Income from Salary field
+        let salaryInput = document.getElementById("Income_from_salary");
+        let salaryValidation = document.getElementById("salary-validation");
+        let salary = salaryInput.value;
+
+        if (salary.trim() === "") {
+            salaryValidation.textContent = "Income from salary is required";
+        } else if (isNaN(parseFloat(salary))) {
+            salaryValidation.textContent = "Please enter a valid number";
+        } else if (!/^\d*\.?\d*$/.test(salary)) {
+            salaryValidation.textContent = "Salary should not contain alphabets";
+        } else {
+            salaryValidation.textContent = "";
+        }
+
+        // Validate Income from Rent field
+        let rentInput = document.getElementById("Income_from_rent");
+        let rentValidation = document.getElementById("rent-validation");
+        let rent = rentInput.value;
+
+        if (rent.trim() === "") {
+            rentValidation.textContent = "Income from Rent is required";
+        } else if (isNaN(parseFloat(rent))) {
+            rentValidation.textContent = "Please enter a valid number";
+        } else if (!/^\d*\.?\d*$/.test(rent)) {
+            rentValidation.textContent = "Rent should not contain alphabets";
+        } else {
+            rentValidation.textContent = "";
+        }
+
+        // Validate Income from Other sources field
+        let otherSourcesInput = document.getElementById("Income_from_other_sources");
+        let otherSourcesValidation = document.getElementById("other-validation");
+        let otherSources = otherSourcesInput.value;
+
+        if (otherSources.trim() === "") {
+            otherSourcesValidation.textContent = "Income from Other sources is required";
+        } else if (isNaN(parseFloat(otherSources))) {
+            otherSourcesValidation.textContent = "Please enter a valid number";
+        } else if (!/^\d*\.?\d*$/.test(otherSources)) {
+            otherSourcesValidation.textContent = "Income from other sources should not contain alphabets";
+        } else {
+            otherSourcesValidation.textContent = "";
+        }
+
+        // Validate LIC field
+        let licInput = document.getElementById("LIC");
+        let licValidation = document.getElementById("lic-validation");
+        let lic = licInput.value;
+
+        if (lic.trim() === "") {
+            licValidation.textContent = "LIC is required";
+        } else if (isNaN(parseFloat(lic))) {
+            licValidation.textContent = "Please enter a valid number";
+        } else if (!/^\d*\.?\d*$/.test(lic)) {
+            licValidation.textContent = "LIC should not contain alphabets";
+        } else {
+            licValidation.textContent = "";
+        }
+
+        // Validate Medical Insurance field
+        let medicalInput = document.getElementById("Medical_Insurance");
+        let medicalValidation = document.getElementById("medical-validation");
+        let medical = medicalInput.value;
+
+        if (medical.trim() === "") {
+            medicalValidation.textContent = "Medical Insurance is required";
+        } else if (isNaN(parseFloat(medical))) {
+            medicalValidation.textContent = "Please enter a valid number";
+        } else if (!/^\d*\.?\d*$/.test(medical)) {
+            medicalValidation.textContent = "Medical Insurance should not contain alphabets";
+        } else {
+            medicalValidation.textContent = "";
+        }
+
+        // Validate Deposit field
+        let depositInput = document.getElementById("Deposit");
+        let depositValidation = document.getElementById("deposit-validation");
+        let deposit = depositInput.value;
+
+        if (deposit.trim() === "") {
+            depositValidation.textContent = "Deposit is required";
+        } else if (isNaN(parseFloat(deposit))) {
+            depositValidation.textContent = "Please enter a valid number";
+        } else if (!/^\d*\.?\d*$/.test(deposit)) {
+            depositValidation.textContent = "Deposit should not contain alphabets";
+        } else {
+            depositValidation.textContent = "";
+        }
+    }
+
+    // Add event listeners for input fields
+    document.getElementById("Name").addEventListener("input", validateInput);
+    document.getElementById("PAN_number").addEventListener("input", validateInput);
+    document.getElementById("Income_from_salary").addEventListener("input", validateInput);
+    document.getElementById("Income_from_rent").addEventListener("input", validateInput);
+    document.getElementById("Income_from_other_sources").addEventListener("input", validateInput);
+    document.getElementById("LIC").addEventListener("input", validateInput);
+    document.getElementById("Medical_Insurance").addEventListener("input", validateInput);
+    document.getElementById("Deposit").addEventListener("input", validateInput);
+
+        
+           function getdata() {
+            let data1 = document.getElementById("Name").value;
+            let data2 = document.getElementById("PAN_number").value;
+            let data3 = parseFloat(document.getElementById("Income_from_salary").value);
+            let data4 = parseFloat(document.getElementById("Income_from_rent").value);
+            let data5 = parseFloat(document.getElementById("Income_from_other_sources").value);
+            let data6 = parseFloat(document.getElementById("LIC").value);
+            let data7 = parseFloat(document.getElementById("Medical_Insurance").value);
+            let data8 = parseFloat(document.getElementById("Deposit").value);
+
+            // Validate Name field
+            if (!validateName(data1)) {
+                alert("Name should not contain numbers.");
+                return;
+            }
+
+            // Validate other fields for empty input
+            if (data1.trim() === "" || data2.trim() === "" || isNaN(data3) || isNaN(data4) || isNaN(data5) || isNaN(data6) || isNaN(data7) || isNaN(data8)) {
+                alert("Please fill out all fields with valid data.");
+                return;
+            }
+
+            // Calculate tax and display results
+            let total = data3 + data4 + data5;
+            let deduction = data6 + data7 + data8;
+            let finalDeduction = total - deduction - 50000;
+            let tax = 0;
+
+            if(finalDeduction <= 250000) {
+                tax = 0;
+            } else if(finalDeduction > 250000 && finalDeduction <= 500000) {
+                tax = (5/100) * finalDeduction;
+            } else if(finalDeduction > 500000 && finalDeduction <= 700000) {
+                tax = (10/100) * finalDeduction;
+            } else {
+                tax = (15/100) * finalDeduction;
+            }
+
+            document.getElementById("name-output").innerText = data1;
+            document.getElementById("pan-output").innerText = data2;
+            document.getElementById("total-income-output").innerText = total.toFixed(2);
+            document.getElementById("deduction-output").innerText = deduction;
+            document.getElementById("final-deduction-output").innerText = finalDeduction.toFixed(2);
+            document.getElementById("tax-output").innerText = tax.toFixed(2);
+
+            document.getElementById("result").style.display = "block";
+        }
+	
+
+        // Function to validate Name field
+        function validateName(name) {
+            return !/\d/.test(name); // Check if there are no numbers in the name
+        }
+    </script>
+</body>
+</html>

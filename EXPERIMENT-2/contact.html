@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - TANISHQ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('contact11.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #333;
+        }
+        header {
+            background-color: #ffd700;
+            color: #333;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            position: relative; /* Make container relative for absolute positioning */
+        }
+        h1 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+            display: flex; /* Use flexbox to align items */
+            flex-direction: column; /* Stack form elements vertically */
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: calc(100% - 20px); /* Take up 100% width minus margin */
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #ffd700;
+            color: #333;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #ffc107;
+        }
+        .success-message {
+            display: none;
+            background-color: #4caf50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            position: absolute; /* Position absolute for free positioning */
+            top: 20px; /* Adjust top position */
+            right: 20px; /* Adjust right position */
+        }
+        .show {
+            display: block;
+        }
+        .further-message {
+            display: none;
+            background-color: #ffd700;
+            color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .show-further {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Contact Us</h1>
+</header>
+
+<div class="container">
+    <form action="#" method="post" id="contact-form">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Your Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="address">Your Address:</label>
+        <textarea id="address" name="address" rows="4" required></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+    <div class="success-message" id="success-msg">Your message has been submitted successfully!</div>
+    <div class="further-message" id="further-msg">We will contact you further.</div>
+</div>
+
+<script>
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+        
+        // Here, you would typically submit the form data via AJAX to your backend
+        // For this example, we'll simply display the success message
+        
+        document.getElementById('success-msg').classList.add('show'); // Show success message
+        setTimeout(function() {
+            document.getElementById('success-msg').classList.remove('show'); // Hide success message after 3 seconds
+            document.getElementById('further-msg').classList.add('show-further'); // Show further message
+        }, 3000);
+    });
+</script>
+
+</body>
+</html>

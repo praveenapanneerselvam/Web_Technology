@@ -1,0 +1,52 @@
+ #div1
+{
+
+background-color:pink;
+height:150px;
+}
+#div1 img {
+   position: absolute;
+   top: 10;
+   right: 10;
+   width: 150px;
+   height: 150px;
+}
+.class1
+{
+
+ background-color:green;
+}
+#div2
+{
+color:Tomato;
+background-color:pink;
+width:600px
+}
+#div3
+{
+font-color:blue;
+font-family :Lucida Handwriting ;
+background-color:Lavender;
+width:989px
+}
+.content_area
+{
+width:100%;
+}
+.left_content_area
+{
+width:50%;
+float:left;
+height:30%;
+background-color:Paleturquoise;
+
+}
+.right_content_area
+{
+width:50%;
+float:right;
+height:30%;
+background-color:Wheat;
+}
+
+
